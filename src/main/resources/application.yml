@@ -1,0 +1,56 @@
+pbc:
+  brand: 日廠
+  price: 100.12
+
+logging:
+  file:
+    name: startboot.log
+    
+# 異動static resources 訪問路徑方式；若有異動要留意，index.html如果放在靜態資源下
+# 會訪問不到
+#spring:
+#  mvc:
+#    static-path-pattern: "/res/**"
+
+
+spring:
+  datasource:
+#   UTC全球標準時間，useSSL設定false，allowPublicKeyRetrieval=true；都要設定
+    url: jdbc:mysql://localhost:3306/tutorial?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf-8
+    username: root
+    password: 1234
+#   mysql 5以上，使用com.mysql.cj.jdbc.Driver。另外url需要指定
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#   使用spring-boot-starter-data-jdbc默認導入的連接池為com.zaxxer.hikari.HikariDataSource，所以不用再設定
+#    type: com.zaxxer.hikari.HikariDataSource
+# 改用 https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter/配置datasource
+    druid:
+#     開啟filte
+      filters: stat,wall
+      stat-view-servlet:
+        enabled: true
+        login-username: druid
+        login-password: druid
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+      aop-patterns:
+      - com.example.starter.*
+#     設置filter細節
+      filter:
+        stat:
+          enabled: true
+        wall:
+          enabled: true
+          
+# mybatis，全局配置類盡量使用yml撰寫
+mybatis:
+# 全局配置類，當採用
+#  config-location: classpath:mybatis/mybatis-config.xml
+# mapper location
+  mapper-locations:
+  - classpath:mybatis/mapper/*.xml
+# 當此處的全局配置類啟用，config-location則需要取消
+  configuration:
+    map-underscore-to-camel-case: true
