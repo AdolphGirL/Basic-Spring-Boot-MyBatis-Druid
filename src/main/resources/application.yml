@@ -51,6 +51,9 @@ mybatis:
 # mapper location
   mapper-locations:
   - classpath:mybatis/mapper/*.xml
+# scan return type pojo location
+# https://blog.csdn.net/daijiguo/article/details/82827430
+  type-aliases-package: com.example.starter.domain
 # 當此處的全局配置類啟用，config-location則需要取消
   configuration:
     map-underscore-to-camel-case: true

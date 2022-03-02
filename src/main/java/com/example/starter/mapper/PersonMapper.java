@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Update;
 
 import com.example.starter.domain.Person;
 
+/**
+ *	DAO層不管是用xml annotation，都不會影響事務管理的方式
+ */
 @Mapper
 public interface PersonMapper {
 	
