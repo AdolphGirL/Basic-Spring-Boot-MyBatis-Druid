@@ -22,17 +22,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
+		<!-- https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
 		
-		<!-- jdbc 使用案例 -->
+		<!-- jdbc 使用案例 mybatis 自帶 spring-boot-starter-data-jdbc dependency 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 		</dependency>
-		
+		 -->
 		<!-- mysql -->
 		<!-- spring-boot-dependencies pom已經加入mysql connect；但目前測試local為8.0.17 -->
 		<dependency>
@@ -65,11 +72,12 @@
 		</dependency>
 		
 		<!-- elasticsearch -->
-		<!-- 版本對照 https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#preface.versions -->
+		<!-- 版本對照 https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#preface.versions
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-elasticsearch</artifactId>
 		</dependency>
+		 -->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

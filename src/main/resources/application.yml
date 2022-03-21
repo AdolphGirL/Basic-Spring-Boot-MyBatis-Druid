@@ -2,6 +2,11 @@ pbc:
   brand: 日廠
   price: 100.12
 
+server:
+  servlet:
+    context-path: /start
+  port: 8081
+
 logging:
   file:
     name: startboot.log
@@ -12,8 +17,15 @@ logging:
 #  mvc:
 #    static-path-pattern: "/res/**"
 
-
 spring:
+# 這些預設值都有(ThymeleafAutoConfiguration)
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: LEGACYHTML5
+    enabled: true
   datasource:
 #   UTC全球標準時間，useSSL設定false，allowPublicKeyRetrieval=true；都要設定
     url: jdbc:mysql://localhost:3306/tutorial?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf-8
