@@ -1,7 +1,3 @@
-pbc:
-  brand: 日廠
-  price: 100.12
-
 server:
   servlet:
     context-path: /start
@@ -9,11 +5,12 @@ server:
       charset: UTF-8
       force: true
       enabled: true
-  port: 8081
+#  port: 8081
 
-logging:
-  file:
-    name: startboot.log
+#交由logbackxml配置
+#logging:
+#  file:
+#    name: startboot.log
     
 # 異動static resources 訪問路徑方式；若有異動要留意，index.html如果放在靜態資源下
 # 會訪問不到
@@ -25,6 +22,10 @@ logging:
 #    static-path-pattern: "/res/**"
 
 spring:
+# 何種設定啟動
+  profiles:
+    active:
+    - dev
 #  被@Deprecated，改用server servlet
 #  http:
 #    encoding:
@@ -68,7 +69,7 @@ spring:
           enabled: true
         wall:
           enabled: true
-          
+
 # mybatis，全局配置類盡量使用yml撰寫
 mybatis:
 # 全局配置類，當採用
@@ -82,3 +83,29 @@ mybatis:
 # 當此處的全局配置類啟用，config-location則需要取消
   configuration:
     map-underscore-to-camel-case: true
+
+# 測試 @ConfigurationProperties
+pbc:
+  brand: 日廠
+  price: 100.12
+  
+---
+
+spring:
+  config:
+    activate:
+      on-profile:
+      - dev
+server:
+  port: 8081
+  
+---
+
+spring:
+  config:
+    activate:
+      on-profile:
+      - prod
+      
+server:
+  port: 8080

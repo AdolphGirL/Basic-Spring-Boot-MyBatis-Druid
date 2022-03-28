@@ -9,6 +9,8 @@ import com.example.starter.bean.BeanPet;
 import com.example.starter.bean.BeanUser;
 import com.example.starter.bean.ImportUser;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * annotation方式的設定檔；
  * (配置類的實現，其實也是個single bean)
@@ -26,9 +28,22 @@ import com.example.starter.bean.ImportUser;
  * @ImportResource，自行查閱
  * @ConfigurationProperties
  */
+@Slf4j
 @Import(ImportUser.class)
 @Configuration
 public class SelfConfig {
+	
+	public SelfConfig() {
+		log.info("[+] [SelfConfig] init ... ");
+	}
+	
+//	要在@ConditionalOnBean(name = "beanUser")，之前生成bean，所以要寫在前頭
+//	測試，當有@ConditionalOnBean(value = BeanUser.class)，才生成BeanPet
+//	沒設定bean name，會引方法名稱當成bean name，例如getBeanUser
+	@Bean
+	public BeanUser beanUser() {
+		return new BeanUser();
+	}
 	
 	/**
 	 * proxyBeanMethods = true，表示，SelfConfig本身就是個spring的代理對象。
@@ -37,16 +52,22 @@ public class SelfConfig {
 	 * 
 	 * @ConditionalOnBean(value = BeanUser.class)，當存在BeanUser，再生成BeanPet
 	 * 若標註在class上，則條件成立十，該class內做的事情才會生成
+	 * 
+	 * https://cloud.tencent.com/developer/article/1403117
+	 * 
+	 * @ConditionalOnBean，也可以用@ConditionalOnClass取代
 	 */
-	@ConditionalOnBean(value = BeanUser.class)
-	@Bean(name = "pet")
-	public BeanPet getBeanPet() {
+//	@Bean(name = "pet")
+	@Bean
+	@ConditionalOnBean(name = "beanUser")
+	public BeanPet beanPet() {
 		return new BeanPet();
 	}
 	
-//	@Bean(name = "beanuser")
-//	public BeanUser getBeanUser() {
+//	TODO 寫在這邊會比@ConditionalOnBean(name = "beanUser")順序晚，所以會無效
+//	要在@ConditionalOnBean(name = "beanUser")，之前生成bean，所以要寫在前頭
+//	@Bean
+//	public BeanUser beanUser() {
 //		return new BeanUser();
 //	}
-	
 }

@@ -1,14 +1,18 @@
 package com.example.starter;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import com.example.starter.bean.ImportUser;
+
+import lombok.extern.slf4j.Slf4j;
 
 // @SpringBootApplication @import 高級用法，
 
 //	懶得每個Mapper都寫@Mapper，直接在此 or configuration 使用 mapperscan
 //@MapperScan
+@Slf4j
 @SpringBootApplication
 public class StarterBootApplication {
 
@@ -18,7 +22,7 @@ public class StarterBootApplication {
 //		查看目前產生的所有bean
 		String[] arr = run.getBeanDefinitionNames();
 		for(String name : arr) {
-			System.out.println(name);
+			log.info("[+] [main] bean name: {} ", name);
 		}
 		
 //		測試code
@@ -26,13 +30,15 @@ public class StarterBootApplication {
 //		BeanPet pet2 = run.getBean("pet", BeanPet.class);
 //		
 //		System.out.println("[+] pet1 == pet2: " + (pet1 == pet2));
-//		
-//		ImportUser importUser = run.getBean("com.example.starter.bean.ImportUser", ImportUser.class);
-//		System.out.println("[+] importUser: " + importUser);
 		
-//		測試Conditional
-//		boolean isHasBeanPet = run.containsBean("pet");
-//		System.out.println("[+] isHasBeanPet: " + isHasBeanPet);
+//		TODO 測試，@Import；在SelfConfig，使用了import
+//		ImportUser importUser = run.getBean("com.example.starter.bean.ImportUser", ImportUser.class);
+//		log.info("[+] [main] importUser: {} ", importUser);
+		
+//		測試ConditionalOnBean
+//		boolean isHasBeanPet = run.containsBean("beanPet");
+//		log.info("[+] [main] isHasBeanPet: {} ", isHasBeanPet);
+//		
 	}
 
 }
