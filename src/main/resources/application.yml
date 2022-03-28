@@ -5,6 +5,10 @@ pbc:
 server:
   servlet:
     context-path: /start
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
   port: 8081
 
 logging:
@@ -13,11 +17,20 @@ logging:
     
 # 異動static resources 訪問路徑方式；若有異動要留意，index.html如果放在靜態資源下
 # 會訪問不到
+# 這邊測試是將url異動為/res，則這些請求會當成靜態資源的請求
+# 
+# 也可以交由WebMvcConfigurer處理
 #spring:
 #  mvc:
 #    static-path-pattern: "/res/**"
 
 spring:
+#  被@Deprecated，改用server servlet
+#  http:
+#    encoding:
+#      force: true
+#      charset: UTF-8
+#      enabled: true
 # 這些預設值都有(ThymeleafAutoConfiguration)
   thymeleaf:
     cache: false

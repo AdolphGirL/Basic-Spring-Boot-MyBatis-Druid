@@ -15,11 +15,11 @@ public class StarterBootApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext run = SpringApplication.run(StarterBootApplication.class, args);
 		
-//		
-//		String[] arr = run.getBeanDefinitionNames();
-//		for(String name : arr) {
-//			System.out.println(name);
-//		}
+//		查看目前產生的所有bean
+		String[] arr = run.getBeanDefinitionNames();
+		for(String name : arr) {
+			System.out.println(name);
+		}
 		
 //		測試code
 //		BeanPet pet1 = run.getBean("pet", BeanPet.class);

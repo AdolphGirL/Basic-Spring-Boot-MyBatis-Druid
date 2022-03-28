@@ -9,9 +9,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 	
-	<title>首頁</title>
+	<title>Session Auth Error Handler</title>
 </head>
 <body>
-	templates 首頁
+	<h1>Error Handler</h1>
+	<div th:text="${url}"></div>
+	<div th:text="${exception.message}"></div>
 </body>
 </html>
