@@ -21,6 +21,18 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<!-- Exclude the Tomcat dependency，改用Undertow -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
 		
 		<!-- https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html -->
@@ -39,14 +51,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 		</dependency>
-		 -->
-		<!-- mysql -->
-		<!-- spring-boot-dependencies pom已經加入mysql connect；但目前測試local為8.0.17 -->
+		--> 
+		
+		<!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc，支持2017，jre8 -->
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>10.2.0.jre8</version>
+		</dependency>
+		
+		<!-- mysql 關閉，使用mssql -->
+		<!-- spring-boot-dependencies pom已經加入mysql connect；但目前測試local為8.0.17 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
+		-->
 		
 		<!-- 手動的druid，可參照 MyDataSourceConfig
 		<dependency>
@@ -56,12 +77,14 @@
 		</dependency>
 		-->
 		
-		<!-- 改用 https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter/ -->
+		<!-- 取消 druid，暫時不可用 -->
+		<!-- 改用 https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter/ 
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
 			<version>1.2.8</version>
 		</dependency>
+		-->
 		
 		<!-- https://github.com/mybatis/spring-boot-starter -->
 		<!-- 參考https://mybatis.org/mybatis-3/zh/getting-started.html -->

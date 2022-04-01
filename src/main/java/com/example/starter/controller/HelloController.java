@@ -31,7 +31,7 @@ public class HelloController {
 	@Autowired
 	private PersonService personService;
 	
-	@GetMapping("/hello")
+	@GetMapping(value = "/hello", produces = "application/json;charset=UTF-8")
 	public String hello(@RequestParam(value="name", defaultValue = "World")String name) {
 		log.info("[+] [hello] get data: {} ", name);
 		return String.format("Hello %s!", name);

@@ -5,7 +5,23 @@ server:
       charset: UTF-8
       force: true
       enabled: true
+#   防止cookie被使用，且編碼
+    session:
+      cookie:
+        http-only: true
+        secure: true
 #  port: 8081
+# undertow，使用AccessLogHandler控制accesslog
+  undertow:
+    accesslog:
+      enabled: true 
+      dir:
+        ../logs/access
+#      使用默認 
+      pattern: combinedobf
+      prefix: undertow_access_log.
+      rotate: true
+      suffix: log
 
 #交由logbackxml配置
 #logging:
@@ -41,34 +57,24 @@ spring:
     mode: LEGACYHTML5
     enabled: true
   datasource:
-#   UTC全球標準時間，useSSL設定false，allowPublicKeyRetrieval=true；都要設定
-    url: jdbc:mysql://localhost:3306/tutorial?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf-8
-    username: root
-    password: 1234
-#   mysql 5以上，使用com.mysql.cj.jdbc.Driver。另外url需要指定
-    driver-class-name: com.mysql.cj.jdbc.Driver
-#   使用spring-boot-starter-data-jdbc默認導入的連接池為com.zaxxer.hikari.HikariDataSource，所以不用再設定
+##   local mysql 配置
+##   UTC全球標準時間，useSSL設定false，allowPublicKeyRetrieval=true；都要設定
+#    url: jdbc:mysql://localhost:3306/tutorial?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf-8
+#    username: root
+#    password: 1234
+##   mysql 5以上，使用com.mysql.cj.jdbc.Driver。另外url需要指定
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+##    使用spring-boot-starter-data-jdbc默認導入的連接池為com.zaxxer.hikari.HikariDataSource，所以不用再設定
+##    mybatis使用時，也會將spring-boot-starter-data-jdbc導入，因此pom也不需要特別引入
+##   開啟寫也可以 
 #    type: com.zaxxer.hikari.HikariDataSource
-# 改用 https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter/配置datasource
-    druid:
-#     開啟filte
-      filters: stat,wall
-      stat-view-servlet:
-        enabled: true
-        login-username: druid
-        login-password: druid
-      web-stat-filter:
-        enabled: true
-        url-pattern: /*
-        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
-      aop-patterns:
-      - com.example.starter.*
-#     設置filter細節
-      filter:
-        stat:
-          enabled: true
-        wall:
-          enabled: true
+    
+#   mssql配置
+    url: jdbc:sqlserver://127.0.0.1:1433;databasename=tbdp
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: TBDP_WEB
+    password: kangdainfo
+    type: com.zaxxer.hikari.HikariDataSource
 
 # mybatis，全局配置類盡量使用yml撰寫
 mybatis:
@@ -90,17 +96,18 @@ pbc:
   price: 100.12
   
 ---
-
+  
 spring:
   config:
     activate:
       on-profile:
       - dev
+      
 server:
   port: 8081
-  
+    
 ---
-
+  
 spring:
   config:
     activate:
@@ -109,3 +116,42 @@ spring:
       
 server:
   port: 8080
+  
+---
+
+# 留著紀錄
+# 改用 https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter/配置datasource
+spring:
+  config:
+    activate:
+      on-profile:
+      - nonuse
+#  datasource:
+##   UTC全球標準時間，useSSL設定false，allowPublicKeyRetrieval=true；都要設定
+#    url: jdbc:mysql://localhost:3306/tutorial?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf-8
+#    username: root
+#    password: 1234
+##   mysql 5以上，使用com.mysql.cj.jdbc.Driver。另外url需要指定
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#   使用spring-boot-starter-data-jdbc默認導入的連接池為com.zaxxer.hikari.HikariDataSource，所以不用再設定
+#   type: com.zaxxer.hikari.HikariDataSource
+#   要使用druid，需要解開pom
+#    druid:
+##     開啟filte
+#      filters: stat,wall
+#      stat-view-servlet:
+#        enabled: true
+#        login-username: druid
+#        login-password: druid
+#      web-stat-filter:
+#        enabled: true
+#        url-pattern: /*
+#        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+#      aop-patterns:
+#      - com.example.starter.*
+##     設置filter細節
+#      filter:
+#        stat:
+#          enabled: true
+#        wall:
+#          enabled: true

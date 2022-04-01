@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.example.starter.config.JWTUserContext;
 import com.example.starter.exception.JWTAuthException;
 import com.example.starter.utils.JwtUtil;
 
@@ -44,6 +45,7 @@ public class LoginWithJWTInterceptor implements HandlerInterceptor {
 		if (StringUtils.hasText(auth)) {
 			Claims claims = JwtUtil.parseJWT(auth);
 			if (claims != null) {
+				JWTUserContext.add(claims.getSubject());
 				return true;
 			}
 		}
@@ -56,6 +58,14 @@ public class LoginWithJWTInterceptor implements HandlerInterceptor {
 //		out.close();
 		
 		throw new JWTAuthException("請先登入系統");
+	}
+
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+			throws Exception {
+//		請求完成，需要刪除
+		JWTUserContext.remove();
+		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 	
 	

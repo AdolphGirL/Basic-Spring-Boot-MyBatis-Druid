@@ -20,6 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 	supports，true，才會執行beforeBodyWrite，在該方法內包裝數據，這樣就不需要每個接口都進行統一數據的封裝
  *	
  *	basePackages，指定處理的package；
+ *
+ *	會根據Content-Type來選擇一個HttpMessageConverter來處理，因此該controller如果沒有指定可以接受回應的格式，則繁體會出問題
+ *	produces，指定回應的格式
  */
 @RestControllerAdvice(basePackages = {"com.example.starter.controller"})
 public class RestResponseControllerAdvice implements ResponseBodyAdvice<Object> {

@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * jwt工具，宣告為final
+ * 
+ * TODO 要解決，刪除過期情況
  */
 @Slf4j
 public final class JwtUtil {
@@ -56,7 +58,7 @@ public final class JwtUtil {
 	 * @return
 	 */
 	public static Claims parseJWT(String token) {
-		if (StringUtils.hasText(token)) {
+		if (!StringUtils.hasText(token)) {
 			log.warn("[+] [parseJWT] receive token empty，data: {} ", token);
 			return null;
 		}
